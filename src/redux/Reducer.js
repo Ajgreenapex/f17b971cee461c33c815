@@ -11,6 +11,7 @@ export const Reducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+        error: null,
       };
     case actions.GET_SUCCESS:
       return {

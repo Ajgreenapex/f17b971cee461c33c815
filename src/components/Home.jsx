@@ -1,3 +1,4 @@
+// react hooks
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
@@ -10,6 +11,7 @@ import { Button } from "@material-ui/core";
 export default function Home() {
   const [loading] = useState("loading . . . . . . . ");
   const [count, setcount] = useState(0);
+  const state = useSelector((state) => state);
   const data = useSelector((state) => state.paginationData);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -31,7 +33,9 @@ export default function Home() {
 
   const columns = [
     {
+      // header for heading
       Header: () => <h3 className=" row-design">TITLE</h3>,
+      //accessor for accessing data
       accessor: "title",
     },
     {
@@ -41,8 +45,10 @@ export default function Home() {
     {
       Header: () => <h3 className=" row-design">URL</h3>,
       accessor: "url",
+      //cell is use for accessing data of each columns
       Cell: (props) => {
         return (
+          // button is use for url button
           <Button
             variant="outlined"
             color="primary"
@@ -77,13 +83,17 @@ export default function Home() {
   ];
   return (
     <div>
-      <ReactTable
-        data={data}
-        columns={columns}
-        defaultPageSize={10}
-        noDataText={loading}
-        className="-striped -highlight"
-      ></ReactTable>
+      {state.error === null ? (
+        <ReactTable
+          data={data}
+          columns={columns}
+          defaultPageSize={10}
+          noDataText={loading}
+          className="-striped -highlight"
+        ></ReactTable>
+      ) : (
+        <h1>error something is wrong </h1>
+      )}
     </div>
   );
 }
